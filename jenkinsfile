@@ -73,7 +73,7 @@ pipeline{
 			steps {
 
 				script{
-					withCredentials([kubeconfigFile(credentialsId: 'kubernetes-id', variable: 'KUBECONFIG')]) {
+					withCredentials([kubeconfigFile(credentialsId: 'kubernetes', variable: 'KUBECONFIG')]) {
 						script{
 							try{
 							sh 'kubectl create -f kubernetes/namespace.yml'	
