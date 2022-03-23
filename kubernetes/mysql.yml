@@ -5,7 +5,7 @@ metadata:
     app: my-app
     app.kubernetes.io/name: mysql
   name: mysql-deployment
-  namespace: node-app-dev
+  namespace: node-app
 spec:
   replicas: 1
   selector:
@@ -37,7 +37,7 @@ metadata:
   labels:
     app.kubernetes.io/name: mysql
   name: mysqldb
-  namespace: node-app-dev
+  namespace: node-app
 spec:
   selector:
     app: my-app
