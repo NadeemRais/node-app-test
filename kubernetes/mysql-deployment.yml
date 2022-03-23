@@ -20,7 +20,7 @@ spec:
         tier: mysql
     spec:
       containers:
-      - image: nadeem90/mysql:latest
+      - image: nadeem90/mysql:v1
         resources:
             requests:
               cpu: 1000m
