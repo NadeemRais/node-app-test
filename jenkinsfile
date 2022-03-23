@@ -81,8 +81,9 @@ pipeline{
 							sh 'kubectl apply -f kubernetes/namespace.yml'
 							}
 						}
-		
-						sh 'kubectl apply -f kubernetes/mysql.yml'
+						sh 'kubectl apply -f kubernetes/mysql-secret.yml'
+						sh 'kubectl apply -f kubernetes/mysql-storage.yml'
+						sh 'kubectl apply -f kubernetes/mysql-deployment.yml'
 						sh 'kubectl apply -f kubernetes/backend.yml'
 						sh 'kubectl apply -f kubernetes/frontend.yml'
 					}
