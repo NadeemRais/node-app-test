@@ -33,7 +33,7 @@ pipeline{
                     def patch = version.trim()
 
                     docker.withRegistry('', 'dockerhub') {
-                        def image = docker.build('nadeem90/blog-docker-versioning:latest FrontEnd/.')
+                        def image = sh "docker build -t nadeem90/frontend:latest FrontEnd/." // docker.build('nadeem90/blog-docker-versioning:latest FrontEnd/.')
                         image.push()
                         image.push(major)
                         image.push(minor)
