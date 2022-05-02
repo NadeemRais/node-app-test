@@ -1,43 +1,104 @@
-
 pipeline{
 
-	agent any
+  agent any
 
-	environment {
-		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
-	}
+  environment {
+    DOCKERHUB_CREDENTIALS=credentials('docker_hub_node_app')
+  }
 
-	stages {
-	    
-	     stage('gitclone') {
-
-		 	steps {
-				git "https://github.com/NadeemRais/nodejs_app_giit.git"
-		 	}
-		 }
-
-		stage('Build for frontend image') {
-
-			steps {
-				//sh "docker build -t nadeem90/frontend:v1 FrontEnd/."
-				sh "docker build -t nadeem90/frontend:1.0${env.BUILD_ID} FrontEnd/."
-           / sh "docker tag nadeem90/frontend:v${env.BUILD_ID} nadeem90/frontend:latest"
-			}
-		}
-
+  stages {
       
+      // stage('gitclone') {
 
-		stage('Login') {
+    //  steps {
+    //    git "https://github.com/NadeemRais/nodejs_app_giit.git"
+    //  }
+    // }
 
-			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-			}
-		}
+    stage('Build for frontend image') {
 
-		stage('Push') {
+      steps {
+        sh "docker build -t nadeem90/frontend:v1 FrontEnd/."
+        // sh "docker build -t nadeem90/frontend:v${env.BUILD_ID} FrontEnd/."
+                // sh "docker tag nadeem90/frontend:v${env.BUILD_ID} nadeem90/frontend:latest"
+      }
+    }
 
-			steps {
-				        sh 'docker push nadeem90/frontend:1.0${env.BUILD_ID}'
-              
-			}
-		}
+        stage('Build for backend image') {
+
+      steps {
+        sh "docker build -t nadeem90/backend:v1 backend/."
+        // sh "docker build -t nadeem90/backend:v${env.BUILD_ID} backend/."
+                // sh "docker tag nadeem90/backend:v${env.BUILD_ID} nadeem90/backend:latest"
+      }
+    }
+
+        stage('Build for mysql image') {
+
+      steps {
+        sh "docker build -t nadeem90/mysql:v1 db/."
+        // sh "docker build -t nadeem90/mysql:v${env.BUILD_ID} db/."
+                // sh "docker tag nadeem90/mysql:v${env.BUILD_ID} nadeem90/mysql:latest"
+      }
+    }
+
+    stage('Login') {
+
+      steps {
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+      }
+    }
+
+    stage('Push') {
+
+      steps {
+        sh 'docker push nadeem90/frontend:v1'
+                sh 'docker push nadeem90/backend:v1'
+                sh 'docker push nadeem90/mysql:v1'
+      }
+    }
+
+    stage('Remove old images') {
+
+      steps {
+        sh 'docker rmi -f nadeem90/frontend:v1'
+                sh 'docker rmi -f nadeem90/backend:v1'
+                sh 'docker rmi -f nadeem90/mysql:v1'
+      }
+    }
+
+
+    stage('Deploy on k8s kops') {
+
+      steps {
+
+        script{
+          withCredentials([kubeconfigFile(credentialsId: 'kubernetes', variable: 'KUBECONFIG')]) {
+            script{
+              try{
+              sh 'kubectl create -f kubernetes/namespace.yml' 
+              }catch(error){
+              sh 'kubectl apply -f kubernetes/namespace.yml'
+              }
+            }
+            sh 'kubectl apply -f kubernetes/mysql-secret.yml'
+            sh 'kubectl apply -f kubernetes/mysql-storage.yml'
+            sh 'kubectl apply -f kubernetes/mysql-deployment.yml'
+            sh 'kubectl apply -f kubernetes/backend.yml'
+            sh 'kubectl apply -f kubernetes/frontend.yml'
+          }
+        } 
+       }
+      }
+    
+
+
+  }
+
+  post {
+    always {
+      sh 'docker logout'
+    }
+  }
+
+}
