@@ -33,13 +33,13 @@ pipeline{
 			}
 		}
 
-		stage('Push') {
+		//stage('Push') {
 
-			steps {
-				        sh 'docker push nadeem90/frontend:1.0.${env.BUILD_ID}'
+			//steps {
+				       // sh 'docker push nadeem90/frontend:1.0.${env.BUILD_ID}'
               
-			}
-		}
+		//	}
+	//	}
 		
 	}
 }	
