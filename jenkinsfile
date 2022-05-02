@@ -15,19 +15,33 @@ pipeline{
 		 	}
 		 }
 
-		stage('Build for frontend image') {
+		//stage('Build for frontend image') {
 
-			steps {
-				if(${env.BUILD_ID}<=99)
-				{
-				sh "docker build -t nadeem90/frontend:1.0.${env.BUILD_ID} FrontEnd/."
-				}
-				else
-				{
-				sh "docker build -t nadeem90/frontend:1.${env.BUILD_ID}.0 FrontEnd/."
-				}
-			}
-		}
+			//steps {
+				//sh "docker build -t nadeem90/frontend:1.0.${env.BUILD_ID} FrontEnd/."
+				//}
+			//}
+		//}
+
+		stage('Build') {
+            steps {
+                script {
+                    def version = readFile('VERSION')
+                    def versions = version.split('\\.')
+                    def major = versions[0]
+                    def minor = versions[0] + '.' + versions[1]
+                    def patch = version.trim()
+
+                    docker.withRegistry('', 'my-dockerhub-credentials') {
+                        def image = docker.build('levipayne/blog-docker-versioning:latest')
+                        image.push()
+                        image.push(major)
+                        image.push(minor)
+                        image.push(patch)
+                    }
+                }
+            }
+        }
 
       
 
