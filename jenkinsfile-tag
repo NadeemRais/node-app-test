@@ -17,7 +17,7 @@ pipeline{
                         sh "git config user.email nadeemmalik9800@gmail.com"
                         sh "git config user.name NadeemRais"
                         sh "cat VERSION"
-                        sh "sed -i 's+sed -i 's/1.0.1/${DOCKERTAG}/g' VERSION"
+                        sh "sed -i 's/1.0.1/${DOCKERTAG}/g' VERSION"
                         sh "cat VERSION"
                         sh "git add ."
                         sh "git commit -m 'Done by Jenkins Job changemanifest: ${env.BUILD_NUMBER}'"
