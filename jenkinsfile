@@ -1,29 +1,14 @@
 pipeline{
 
-	agent any
+  agent any
 
-	environment {
-		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
-	}
+  environment {
+    DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+  }
 
-	stages {
-	    
-//	     stage('gitclone') {
+  stages {
 
-//		 	steps {
-//				git branch: 'main', credentialsId: 'github', url: 'https://github.com/NadeemRais/node-app-test.git'
-//		 	}
-//		 }
-
-		//stage('Build for frontend image') {
-
-			//steps {
-				//sh "docker build -t nadeem90/frontend:1.0.${env.BUILD_ID} FrontEnd/."
-				//}
-			//}
-		//}
-
-		stage('Build') {
+    stage('Build') {
             steps {
                 script {
                     def version = readFile('VERSION')
@@ -43,22 +28,10 @@ pipeline{
             }
         }
 
-      
-
-//		stage('Login') {
-//
-//			steps {
-//				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-//			}
-//		}
-
-		//stage('Push') {
-
-			//steps {
-				       // sh 'docker push nadeem90/frontend:1.0.${env.BUILD_ID}'
-              
-		//	}
-	//	}
-		
-	}
-}	
+      stage('Trigger ManifestUpdate') {
+                echo "triggering updatemanifestjob"
+                build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
+        }
+    
+  }
+} 
