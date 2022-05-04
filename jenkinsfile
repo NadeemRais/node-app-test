@@ -6,14 +6,14 @@ pipeline{
 		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
 	}
 
-	stages {
+//	stages {
 	    
-	     stage('gitclone') {
+//	     stage('gitclone') {
 
-		 	steps {
-				git branch: 'main', credentialsId: 'github', url: 'https://github.com/NadeemRais/node-app-test.git'
-		 	}
-		 }
+//		 	steps {
+//				git branch: 'main', credentialsId: 'github', url: 'https://github.com/NadeemRais/node-app-test.git'
+//		 	}
+//		 }
 
 		//stage('Build for frontend image') {
 
@@ -45,11 +45,11 @@ pipeline{
 
       
 
-		stage('Login') {
-
-			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-			}
+//		stage('Login') {
+//
+//			steps {
+//				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+//			}
 		}
 
 		//stage('Push') {
