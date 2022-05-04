@@ -18,6 +18,7 @@ pipeline{
                         sh "git config user.name NadeemRais"
                         //sh "git switch master"
                         sh "cat VERSION"
+			sh "cat ${DOCKERTAG}"
                         sh "sed -i 's+sed -i 's/1.0.1/${DOCKERTAG}+g' VERSION"
                         sh "cat VERSION"
                         sh "git add ."
