@@ -18,7 +18,7 @@ pipeline{
                     def patch = version.trim()
 
                     docker.withRegistry('', 'dockerhub') {
-                        def image = docker.build('nadeem90/blog-docker-versioning:latest')
+                        def image = docker.build('nadeem90/blog-docker-versioning:env.patch')
   
                     }
                 }
