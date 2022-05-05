@@ -12,6 +12,7 @@ pipeline{
             steps {
                 script {
                     def version = readFile('VERSION')
+		    echo "${version}"
                     def versions = version.split('\\.')
                     def major = versions[0]
                     def minor = versions[0] + '.' + versions[1]
