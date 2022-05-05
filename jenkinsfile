@@ -19,10 +19,7 @@ pipeline{
 
                     docker.withRegistry('', 'dockerhub') {
                         def image = docker.build('nadeem90/blog-docker-versioning:latest')
-                        image.push()
-                        image.push(major)
-                        image.push(minor)
-                        image.push(patch)
+  
                     }
                 }
             }
