@@ -8,7 +8,7 @@ pipeline{
     def major = ''
   }
   stages{
-        stage('Build'){
+        stage('Pull version'){
             steps{
               script{
        def version = readFile('VERSION')
@@ -47,7 +47,32 @@ pipeline{
            }
         }
 	
+	
+	
+	stage('Build') {
 
+			steps {
+				script{
+					switch("${ImageTag}") {
+  						case "Patch":
+   						 	echo "This is patch build block"
+    						sh "docker build . -t nadeem90/test-imagetage:$patch"
+    						break
+  						case "Minor":
+   							echo "this is minor build block"
+   						 	sh "docker build . -t nadeem90/test-imagetage:$minor"
+   						 	break
+  						case "Major":
+    						echo "This is major build block"
+   							sh "docker build . -t nadeem90/test-imagetage:$major"
+    						break
+						}
+					
+				      	}	
+              			}
+			}
+			
+			
 
 	stage('Docker Login, Docker Push') {
 
