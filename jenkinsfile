@@ -18,11 +18,7 @@ pipeline{
 		      last = last.toInteger() + 1;
 		      def patch = versions[0] + '.' + versions[1]+'.'+"$last"
 		      echo "$patch"
-		      //sh "docker build . -t nadeem90/test-imagetage:$patch"
-		      docker.withRegistry('', 'dockerhub') {
-		      def image = docker.build("nadeem90/test-imagetage:'$patch'")
-		      image.push()
-		      }
+		      sh "docker build . -t nadeem90/test-imagetage:$patch"
 		      
                      }else if("${ImageTag}"=="Minor"){
 		      def versions = version.split('\\.')
@@ -48,7 +44,35 @@ pipeline{
            }
         }
 	
-	
+	stage('Login') {
+
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+
+		stage('Push') {
+
+			steps {
+				script{
+				
+					if("${ImageTag}"=="Patch"){
+					
+						sh 'docker push nadeem90/test-imagetage:$patch'
+					
+					}else if("${ImageTag}"=="Minor"){
+					
+						sh 'docker push nadeem90/test-imagetage:$minor'
+					
+					}else{
+					
+						sh 'docker push nadeem90/test-imagetage:$major'
+						
+					}
+				      }	
+              
+			}
+		}
 	
 	
      }
