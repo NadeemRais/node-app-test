@@ -47,17 +47,13 @@ pipeline{
            }
         }
 	
-	stage('Login') {
 
-			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-			}
-		}
 
-		stage('Push') {
+	stage('Docker Login, Docker Push') {
 
 			steps {
 				script{
+				docker.withRegistry('', 'dockerhub') {
 					switch("${ImageTag}") {
   						case "Patch":
    						 echo "This is patch block"
@@ -72,6 +68,8 @@ pipeline{
    						 //sh "docker push nadeem90/test-imagetage:'$major'"
     						break
 						}
+						
+					}	
 					
 				      }	
               
