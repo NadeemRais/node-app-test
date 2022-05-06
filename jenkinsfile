@@ -58,21 +58,21 @@ pipeline{
 
 			steps {
 				script{
-				
-					if("${ImageTag}"=="Patch"){
-						
-						echo "$patch"
-						sh "docker push nadeem90/test-imagetage:'$patch'"
+					switch("${ImageTag}") {
+  						case "Patch":
+   						 echo "This is patch block"
+    						//sh "docker push nadeem90/test-imagetage:'$patch'"
+    						break
+  						case "Minor":
+   						echo "this is minor block"
+    						//sh "docker push nadeem90/test-imagetage:'$minor'"
+   						 break
+  						case "Major":
+    						echo "This is major block"
+   						 //sh "docker push nadeem90/test-imagetage:'$major'"
+    						break
+						}
 					
-					}else if("${ImageTag}"=="Minor"){
-					
-						sh "docker push nadeem90/test-imagetage:'$minor'"
-					
-					}else{
-					
-						sh "docker push nadeem90/test-imagetage:'$major'"
-						
-					}
 				      }	
               
 			}
