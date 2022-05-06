@@ -60,7 +60,7 @@ pipeline{
 					if("${ImageTag}"=="Patch"){
 						
 						echo "$patch"
-						sh 'docker push nadeem90/test-imagetage:$patch'
+						sh "docker push nadeem90/test-imagetage:'$patch'"
 					
 					}else if("${ImageTag}"=="Minor"){
 					
