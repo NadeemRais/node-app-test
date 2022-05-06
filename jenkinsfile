@@ -4,6 +4,8 @@ pipeline{
    environment {
     DOCKERHUB_CREDENTIALS=credentials('dockerhub')
     def patch = ''
+    def minor = ''
+    def major = ''
   }
   stages{
         stage('Build'){
@@ -25,7 +27,7 @@ pipeline{
 		      def versions = version.split('\\.')
 		      def mid = versions[1]
 		      mid = mid.toInteger() + 1;
-		      def minor = versions[0] + '.' + "$mid"+'.'+0
+		      minor = versions[0] + '.' + "$mid"+'.'+0
 		      echo "$minor"
 		      sh "docker build . -t nadeem90/test-imagetage:$minor"
 
@@ -35,7 +37,7 @@ pipeline{
 		      def versions = version.split('\\.')
 		      def first = versions[0]
 		      first = first.toInteger() + 1;
-		      def major = "$first" + '.' + 0 +'.' + 0
+		      major = "$first" + '.' + 0 +'.' + 0
 		      echo "$major"
 		      sh "docker build . -t nadeem90/test-imagetage:$major"
 		      
@@ -64,11 +66,11 @@ pipeline{
 					
 					}else if("${ImageTag}"=="Minor"){
 					
-						sh 'docker push nadeem90/test-imagetage:$minor'
+						sh "docker push nadeem90/test-imagetage:'$minor'"
 					
 					}else{
 					
-						sh 'docker push nadeem90/test-imagetage:$major'
+						sh "docker push nadeem90/test-imagetage:'$major'"
 						
 					}
 				      }	
