@@ -4,12 +4,13 @@ pipeline{
    environment {
     DOCKERHUB_CREDENTIALS=credentials('dockerhub')
     def new_version = ''
+    def version = ''
   }
   stages{
         stage('Pull version'){
             steps{
               script{
-       def version = readFile('VERSION')
+       	 version = readFile('VERSION')
                      echo "${version}"
 
                      if("${ImageTag}"=="Patch"){
