@@ -10,7 +10,7 @@ pipeline{
         stage('Pull version'){
             steps{
               script{
-		curl -X GET -u admin:nexus http://192.168.3.37:8081/repository/my-repo/VERSION -O
+		sh curl -X GET -u admin:nexus http://192.168.3.37:8081/repository/my-repo/VERSION -O
 		version = readFile('VERSION')
                      echo "${version}"
 
