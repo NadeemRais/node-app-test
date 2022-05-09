@@ -79,7 +79,7 @@ pipeline{
 	   	steps{
             		script {
 
-			int x = Integer.parseInt("$version");
+			int x = Double.parseDouble("$version");
 			echo "$x"
 			
             		sh "sed -i 's/${version}/${new_version}/' VERSION"
