@@ -83,7 +83,7 @@ pipeline{
 			sh "cat file"
 			sh "mv file VERSION"
 			
-			sh "rm file"
+			sh "cat VERSION"
 			
             		//sh "sed -i 's/${version}/${new_version}/g' VERSION"
 
