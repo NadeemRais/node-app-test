@@ -83,8 +83,8 @@ pipeline{
                         sh "git config user.email nadeemmalik9800@gmail.com"
                         sh "git config user.name NadeemRais"
                         sh "cat VERSION"
-			new_version = new_version..toInteger()
-			version = version..toInteger()
+			new_version = new_version.toInteger()
+			version = version.toInteger()
 			echo "$version"
 			echo "$version"
                         sh "sed -r -i s/'${version}'/'${new_version}'/g VERSION"
