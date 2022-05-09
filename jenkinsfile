@@ -3,8 +3,8 @@ pipeline{
   agent any
    environment {
     DOCKERHUB_CREDENTIALS=credentials('dockerhub')
-    String new_version = ''
-    String version = ''
+    def new_version = ''
+    def version = ''
   }
   stages{
         stage('Pull version'){
@@ -78,13 +78,7 @@ pipeline{
 
          stage('Update Nexus') {
 	   	steps{
-            	     script {
-		     
-			//sh "echo '${new_version}' >> file"
-			//sh "cat file"
-			//sh "mv file VERSION"
-			
-			//sh "cat VERSION"
+            	     script {	
 			echo version
 			echo new_version
             		sh "sed -i 's/${version}/${new_version}/g' VERSION"
