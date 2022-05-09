@@ -78,10 +78,9 @@ pipeline{
          stage('Update Nexus') {
 	   	steps{
             	     script {
-
 			def ver = "${version}"
 			def new_ver = "${new_version}"
-			echo $ver
+			echo "${ver}"
             		sh "sed -i 's/${ver}/${new_ver}/g' VERSION"
 
     			sh "curl -v -u admin:nexus --upload-file VERSION http://192.168.3.37:8081/repository/my-repo/"
