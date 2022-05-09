@@ -81,7 +81,7 @@ pipeline{
 
 			println version.getClass();
 			println new_version.getClass();
-            		sh "sed -i 's/${version}/${new_version}/' VERSION"
+            		sh "sed -i 's/${version}.toInteger()/${new_version}.toInteger()/' VERSION"
 
     			sh "curl -v -u admin:nexus --upload-file VERSION http://192.168.3.37:8081/repository/my-repo/"
             			}
