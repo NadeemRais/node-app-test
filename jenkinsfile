@@ -83,7 +83,8 @@ pipeline{
                         sh "git config user.email nadeemmalik9800@gmail.com"
                         sh "git config user.name NadeemRais"
                         sh "cat VERSION"
-			int new_ver = new_version.toInteger()
+			 int new_ver = Integer.valueOf(new_version)
+			//int new_ver = new_version.toInteger()
 			int ver = version.toInteger()
 			echo "$new_ver"
 			echo "$ver"
