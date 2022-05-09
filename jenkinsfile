@@ -81,7 +81,8 @@ pipeline{
 
 			def versions = version.split('\\.')
 			echo "$versions"
-			println versions.getClass();
+			def first = versions[0] + '.' + versions[1]+'.'+versions[2]
+			println first.getClass();
             		sh "sed -i 's/${version}/${new_version}/' VERSION"
 
     			sh "curl -v -u admin:nexus --upload-file VERSION http://192.168.3.37:8081/repository/my-repo/"
