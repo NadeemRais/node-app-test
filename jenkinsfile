@@ -11,7 +11,8 @@ pipeline{
             steps{
               script{
 		sh "curl -X GET -u admin:nexus http://192.168.3.37:8081/repository/my-repo/VERSION -O"
-		version = readFile('VERSION')
+		version = readFile('VERSION').trim()
+		
                      echo "${version}"
 
                      if("${ImageTag}"=="Patch"){
@@ -86,7 +87,7 @@ pipeline{
 			//sh "cat VERSION"
 			echo version
 			echo new_version
-            		sh "sed -i 's/version/new_version/g' VERSION"
+            		sh "sed -i 's/${version}/${new_version}/g' VERSION"
 
     			sh "curl -v -u admin:nexus --upload-file VERSION http://192.168.3.37:8081/repository/my-repo/"
             			}
