@@ -79,7 +79,7 @@ pipeline{
 	   	steps{
             		script {
 
-			sh "ver=$('\${version}')"
+			sh "ver=('${version}')"
 			echo $ver
             		sh "sed -i 's/${version}/${new_version}/g' VERSION"
 
