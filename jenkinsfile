@@ -77,10 +77,10 @@ pipeline{
 
          stage('Update Nexus') {
 	   	steps{
-            		script {
+            	     script {
 
-			def  ver="${version}"
-			def  new_ver="${new_version}"
+			def ver = "${version}"
+			def new_ver = "${new_version}"
 			echo $ver
             		sh "sed -i 's/${ver}/${new_ver}/g' VERSION"
 
