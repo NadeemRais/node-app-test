@@ -10,7 +10,8 @@ pipeline{
         stage('Pull version'){
             steps{
               script{
-       	 version = readFile('VERSION')
+       	 	//version = readFile('VERSION')
+		version = curl -X GET -u admin:nexus http://192.168.3.37:8081/repository/my-repo/VERSION -O
                      echo "${version}"
 
                      if("${ImageTag}"=="Patch"){
