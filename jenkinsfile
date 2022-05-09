@@ -3,8 +3,8 @@ pipeline{
   agent any
    environment {
     DOCKERHUB_CREDENTIALS=credentials('dockerhub')
-    def new_version = ''
-    def version = ''
+    String new_version = ''
+    String version = ''
   }
   stages{
         stage('Pull version'){
@@ -79,13 +79,14 @@ pipeline{
 	   	steps{
             	     script {
 		     
-			sh "echo '${new_version}' >> file"
-			sh "cat file"
-			sh "mv file VERSION"
+			//sh "echo '${new_version}' >> file"
+			//sh "cat file"
+			//sh "mv file VERSION"
 			
-			sh "cat VERSION"
-			
-            		//sh "sed -i 's/${version}/${new_version}/g' VERSION"
+			//sh "cat VERSION"
+			echo version
+			echo new_version
+            		sh "sed -i 's/version/new_version/g' VERSION"
 
     			sh "curl -v -u admin:nexus --upload-file VERSION http://192.168.3.37:8081/repository/my-repo/"
             			}
