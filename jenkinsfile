@@ -79,16 +79,8 @@ pipeline{
 	   	steps{
             		script {
 
-			def versions = version.split('\\.')
-			echo "$versions"
-			def old = versions[0] + '.' + versions[1]+'.'+versions[2]
 			
-			def new_versions = new_version.split('\\.')
-			echo "$new_versions"
-			def newver = new_versions[0] + '.' + new_versions[1]+'.'+new_versions[2]
-			
-			
-            		sh "sed -i 's/${old}/${newver}/g' VERSION"
+            		sh "sed -i 's/${version}/${new_version}/g' VERSION"
 
     			sh "curl -v -u admin:nexus --upload-file VERSION http://192.168.3.37:8081/repository/my-repo/"
             			}
