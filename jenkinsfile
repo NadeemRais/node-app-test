@@ -4,7 +4,7 @@ pipeline{
    environment {
     DOCKERHUB_CREDENTIALS=credentials('dockerhub')
     def new_version = ''
-    def version = ''
+    def version1 = ''
   }
   stages{
         stage('Pull version'){
@@ -83,9 +83,9 @@ pipeline{
          stage('Update Nexus') {
 	   	steps{
             	     script {	
-			echo version
-			echo new_version
-            		sh "sed -i 's/${version}/${new_version}/g' VERSION"
+			
+		
+            		sh "sed -i 's/${version1}/${new_version}/g' VERSION"
 
     			sh "curl -v -u admin:nexus --upload-file VERSION http://192.168.3.37:8081/repository/my-repo/"
             			}
