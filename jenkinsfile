@@ -4,7 +4,7 @@ pipeline{
    environment {
     DOCKERHUB_CREDENTIALS=credentials('dockerhub')
     def new_version = ''
-    def version1 = ''
+    def version = ''
   }
   stages{
         stage('Pull version'){
@@ -15,13 +15,13 @@ pipeline{
 		sh "grep 'frontend' VERSION >> file && grep -Eo '[0-9]+(.[0-9]+)*' file >> final_version"
 		
 		
-		version1 = readFile('final_version').trim()
+		version = readFile('final_version').trim()
 		
                      echo "${version}"
 
                      if("${ImageTag}"=="Patch"){
                       echo "This is patch version"
-		      def versions = version1.split('\\.')
+		      def versions = version.split('\\.')
 		      def last = versions[2]
 		      last = last.toInteger() + 1;
 		      new_version = versions[0] + '.' + versions[1]+'.'+"$last"
@@ -29,7 +29,7 @@ pipeline{
 		     
 		      
                      }else if("${ImageTag}"=="Minor"){
-		      def versions = version1.split('\\.')
+		      def versions = version.split('\\.')
 		      def mid = versions[1]
 		      mid = mid.toInteger() + 1;
 		      new_version = versions[0] + '.' + "$mid"+'.'+0
@@ -39,7 +39,7 @@ pipeline{
                       echo "This is minor version"
                      }else{
                       echo "This is major version"
-		      def versions = version1.split('\\.')
+		      def versions = version.split('\\.')
 		      def first = versions[0]
 		      first = first.toInteger() + 1;
 		      new_version = "$first" + '.' + 0 +'.' + 0
@@ -85,7 +85,7 @@ pipeline{
             	     script {	
 			
 		
-            		sh "sed -i 's/${version1}/${new_version}/g' VERSION"
+            		sh "sed -i 's/${version}/${new_version}/g' VERSION"
 
     			sh "curl -v -u admin:nexus --upload-file VERSION http://192.168.3.37:8081/repository/my-repo/"
             			}
