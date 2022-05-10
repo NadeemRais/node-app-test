@@ -13,8 +13,8 @@ pipeline{
             steps{
               script{
 		sh "curl -X GET -u admin:nexus http://192.168.3.37:8081/repository/my-repo/VERSION -O"
-		//version = readFile('VERSION').trim()
-		sh "rm file && rm final_version"
+
+		//sh "rm file && rm final_version"
 		
 		sh "grep 'backend' VERSION >> file && grep -Eo '[0-9]+(.[0-9]+)*' file >> final_version"
 		
@@ -37,12 +37,10 @@ pipeline{
 		      app_last = app_last.toInteger() + 1;
 		      new_app_ver = app_vers[0] + '.' + app_vers[1]+'.'+"$app_last"
 		      
-		      //sh "rm file && rm final_version"
+		      sh "rm file && rm final_version"
 		      
 	
-		      echo "$new_app_ver"
-		      
-		      echo "$new_version"
+
 		     
 		      
                      }else if("${ImageTag}"=="Minor"){
@@ -58,11 +56,11 @@ pipeline{
 		      app_mid = app_mid.toInteger() + 1;
 		      new_app_ver = app_vers[0] + '.' + "$app_mid"+'.'+0
 		      
-		      //sh "rm file && rm final_version"
+		      sh "rm file && rm final_version"
 		      
-		      echo "$new_app_ver"
+		     
 
-                      echo "This is minor version"
+                     
                      }else{
                       echo "This is major version"
 		      def versions = version.split('\\.')
@@ -78,14 +76,8 @@ pipeline{
 		      temp2 = temp2.toInteger() + 1;
 		      def temp3 = temp1[0] +'='+ "$temp2"
 		      new_app_ver = "$temp3" + '.' +0+'.'+0
-		      echo "$temp3"
-		  	
-			echo "new_app_ver"
-		      
-		      //sh "rm file && rm final_version"
-		      
-		      echo "$new_app_ver"
-		      
+		      sh "rm file && rm final_version"
+		          
 		      
                      }
                 }    
@@ -108,17 +100,17 @@ pipeline{
 
 			
 			
-	//stage('Docker Login, Docker Push') {
+	stage('Docker Login, Docker Push') {
 
-			//steps {
-				//script{
-				//docker.withRegistry('', 'dockerhub') {
+			steps {
+				script{
+				docker.withRegistry('', 'dockerhub') {
 						
-					//sh "docker push nadeem90/test-imagetage:'$new_version'"	
-				      //}	
-              	//}
-			//}
-		//}
+					sh "docker push nadeem90/test-imagetage:'$new_version'"	
+				      }	
+              	}
+			}
+		}
 		
 
          stage('Update Nexus') {
