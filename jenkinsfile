@@ -14,8 +14,8 @@ pipeline{
               script{
 		sh "curl -X GET -u admin:nexus http://192.168.3.37:8081/repository/my-repo/VERSION -O"
 		//version = readFile('VERSION').trim()
-		//sh "rm file && rm final_version"
-		sh "grep 'frontend' VERSION >> file 
+		sh "rm file && rm final_version"
+		
 		sh "grep 'frontend' VERSION >> file && grep -Eo '[0-9]+(.[0-9]+)*' file >> final_version"
 		
 		
