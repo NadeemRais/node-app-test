@@ -20,7 +20,7 @@ pipeline{
 		
 		def app_ver = sh "cat file"
 			
-		    echo "$app_version"	
+		    echo "$app_ver"	
                      echo "${version}"
 
                      if("${ImageTag}"=="Patch"){
