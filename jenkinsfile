@@ -18,6 +18,9 @@ pipeline{
 		
 		version = readFile('final_version').trim()
 		
+		def app_ver = sh "grep 'frontend' VERSION 
+			
+		    echo "$app_version"	
                      echo "${version}"
 
                      if("${ImageTag}"=="Patch"){
@@ -26,6 +29,7 @@ pipeline{
 		      def last = versions[2]
 		      last = last.toInteger() + 1;
 		      new_version = versions[0] + '.' + versions[1]+'.'+"$last"
+		      
 		      echo "$new_version"
 		     
 		      
