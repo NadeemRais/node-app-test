@@ -6,6 +6,7 @@ pipeline{
     def new_version = ''
     def version = ''
     def app_ver = ''
+    def new_app_ver = ''
   }
   stages{
         stage('Pull version'){
@@ -31,9 +32,11 @@ pipeline{
 		      new_version = versions[0] + '.' + versions[1]+'.'+"$last"
 		      
 		      def app_vers = app_ver.split('\\.')
+		      app_last = app_last.toInteger() + 1;
+		      new_app_ver = vers[0] + '.' + vers[1]+'.'+"$app_last"
 		      
-		      echo "$app_vers"
-		      
+		      echo "$app_ver"
+		      echo "$new_app_ver"
 		      
 		      echo "$new_version"
 		     
