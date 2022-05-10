@@ -19,9 +19,8 @@ pipeline{
 		
 		version = readFile('final_version').trim()
 		
-		 app_ver = readFile('file').trim()
+		app_ver = readFile('file').trim()		
 			
-		    echo "$app_ver"	
                      echo "${version}"
 
                      if("${ImageTag}"=="Patch"){
@@ -30,6 +29,11 @@ pipeline{
 		      def last = versions[2]
 		      last = last.toInteger() + 1;
 		      new_version = versions[0] + '.' + versions[1]+'.'+"$last"
+		      
+		      def app_vers = app_ver.split('\\.')
+		      
+		      echo "$app_vers"
+		      
 		      
 		      echo "$new_version"
 		     
