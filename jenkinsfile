@@ -14,9 +14,6 @@ pipeline{
 		//version = readFile('VERSION').trim()
 		sh "grep 'frontend' VERSION >> file && grep -Eo '[0-9]+(.[0-9]+)*' file >> final_version"
 		
-	
-		
-		//sh "grep "frontend" version >> file && grep -Eo '[0-9]+(\.[0-9]+)*' file >> final_version"
 		
 		version1 = readFile('final_version').trim()
 		
