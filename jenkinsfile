@@ -36,7 +36,7 @@ pipeline{
 		      app_last = app_last.toInteger() + 1;
 		      new_app_ver = app_vers[0] + '.' + app_vers[1]+'.'+"$app_last"
 		      
-		      sh "rm file && rm final_version"
+		      //sh "rm file && rm final_version"
 		      
 	
 		      echo "$new_app_ver"
@@ -57,7 +57,7 @@ pipeline{
 		      app_mid = app_mid.toInteger() + 1;
 		      new_app_ver = app_vers[0] + '.' + "$app_mid"+'.'+0
 		      
-		      sh "rm file && rm final_version"
+		      //sh "rm file && rm final_version"
 		      
 		      echo "$new_app_ver"
 
@@ -76,7 +76,7 @@ pipeline{
 		      app_first = app_first.toInteger() + 1;
 		      new_app_ver = "$app_first" + '.' +0+'.'+0
 		      
-		      sh "rm file && rm final_version"
+		      //sh "rm file && rm final_version"
 		      
 		      echo "$new_app_ver"
 		      
