@@ -32,8 +32,9 @@ pipeline{
 		      new_version = versions[0] + '.' + versions[1]+'.'+"$last"
 		      
 		      def app_vers = app_ver.split('\\.')
-		      def app_last = app_last.toInteger() + 1;
-		      new_app_ver = vers[0] + '.' + vers[1]+'.'+"$app_last"
+		      def app_last = app_vers[2]
+		      app_last = app_last.toInteger() + 1;
+		      new_app_ver = app_vers[0] + '.' + app_vers[1]+'.'+"$app_last"
 		      
 		      echo "$app_ver"
 		      echo "$new_app_ver"
