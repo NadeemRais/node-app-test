@@ -49,6 +49,13 @@ pipeline{
 		      new_version = versions[0] + '.' + "$mid"+'.'+0
 		      echo "$new_version"
 		      
+		      
+		      def app_vers = app_ver.split('\\.')
+		      def app_mid = app_vers[1]
+		      app_mid = app_mid.toInteger() + 1;
+		      new_app_ver = app_vers[0] + '.' + "$app_mid"+'.'+0
+		      
+		      echo "$new_app_ver"
 
                       echo "This is minor version"
                      }else{
@@ -58,6 +65,13 @@ pipeline{
 		      first = first.toInteger() + 1;
 		      new_version = "$first" + '.' + 0 +'.' + 0
 		      echo "$new_version"
+		      
+		      def app_vers = app_ver.split('\\.')
+		      def app_first = app_vers[1]
+		      app_first = app_first.toInteger() + 1;
+		      new_app_ver = "$app_first" + '.' +0+'.'+0
+		      
+		      echo "$new_app_ver"
 		      
 		      
                      }
@@ -99,7 +113,7 @@ pipeline{
             	     script {	
 			
 		
-            		sh "sed -i 's/${version}/${new_version}/g' VERSION" 
+            		sh "sed -i 's/${app_ver}/${new_app_ver}/g' VERSION" 
 
     			sh "curl -v -u admin:nexus --upload-file VERSION http://192.168.3.37:8081/repository/my-repo/"
             			}
