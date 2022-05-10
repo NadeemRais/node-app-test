@@ -77,8 +77,10 @@ pipeline{
 		      def temp2 = temp1[1]
 		      temp2 = temp2.toInteger() + 1;
 		      def temp3 = temp1[0] +'='+ "$temp2"
+		      new_app_ver = "$temp3" + '.' +0+'.'+0
 		      echo "$temp3"
-		  
+		  	
+			echo "new_app_ver"
 		      
 		      //sh "rm file && rm final_version"
 		      
