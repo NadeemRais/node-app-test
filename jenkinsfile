@@ -18,7 +18,7 @@ pipeline{
 		
 		version = readFile('final_version').trim()
 		
-		def app_ver = cat file
+		def app_ver = sh "cat file"
 			
 		    echo "$app_version"	
                      echo "${version}"
