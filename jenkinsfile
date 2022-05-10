@@ -5,6 +5,7 @@ pipeline{
     DOCKERHUB_CREDENTIALS=credentials('dockerhub')
     def new_version = ''
     def version = ''
+    def app_ver
   }
   stages{
         stage('Pull version'){
@@ -18,7 +19,7 @@ pipeline{
 		
 		version = readFile('final_version').trim()
 		
-		  app_ver=$(cat file)
+		 app_ver = readFile('file').trim()
 			
 		    echo "$app_ver"	
                      echo "${version}"
