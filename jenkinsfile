@@ -11,13 +11,13 @@ pipeline{
             steps{
               script{
 		sh "curl -X GET -u admin:nexus http://192.168.3.37:8081/repository/my-repo/VERSION -O"
-		version = readFile('VERSION').trim()
+		version = readFile('VERSION').trim() && grep "frontend" version  && grep -Eo '[0-9]+(\.[0-9]+)*' version
 		
-		sh "grep "frontend" version >> file && grep -Eo '[0-9]+(\.[0-9]+)*' file >> final_version"
+		//sh "grep "frontend" version >> file && grep -Eo '[0-9]+(\.[0-9]+)*' file >> final_version"
 		
-		version1 = readFile('final_version').trim()
+		//version1 = readFile('final_version').trim()
 		
-                     echo "${version1}"
+                     echo "${version}"
 
                      if("${ImageTag}"=="Patch"){
                       echo "This is patch version"
@@ -29,7 +29,7 @@ pipeline{
 		     
 		      
                      }else if("${ImageTag}"=="Minor"){
-		      def versions = version1.split('\\.')
+		      def versions = version.split('\\.')
 		      def mid = versions[1]
 		      mid = mid.toInteger() + 1;
 		      new_version = versions[0] + '.' + "$mid"+'.'+0
@@ -39,7 +39,7 @@ pipeline{
                       echo "This is minor version"
                      }else{
                       echo "This is major version"
-		      def versions = version1.split('\\.')
+		      def versions = version.split('\\.')
 		      def first = versions[0]
 		      first = first.toInteger() + 1;
 		      new_version = "$first" + '.' + 0 +'.' + 0
