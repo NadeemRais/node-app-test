@@ -76,7 +76,8 @@ pipeline{
 		      def temp1 = temp.split('\\=')
 		      def temp2 = temp1[1]
 		      temp2 = temp2.toInteger() + 1;
-		      echo "$temp2"
+		      def temp3 = temp[0] + "$temp2"
+		      echo "$temp3"
 		  
 		      
 		      //sh "rm file && rm final_version"
