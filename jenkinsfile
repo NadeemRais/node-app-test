@@ -72,6 +72,8 @@ pipeline{
 		      echo "$new_version"
 		      
 		      def app_vers = app_ver.split('\\.')
+		      def temp = app_vers[0]
+		      echo "$temp"
 		      echo "$app_vers"
 		      def app_first = app_vers[0]
 		      app_first = app_first.toInteger() + 1;
