@@ -21,7 +21,7 @@ pipeline{
 		
 		version = readFile('final_version').trim()
 		
-		def app_ver = readFile('file').trim()		
+		 app_ver = readFile('file').trim()		
 			
                      echo "${version}"
 		   
