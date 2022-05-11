@@ -6,7 +6,7 @@ pipeline{
     def new_version = ''
     def version = ''
     def applicaton = 'backend'
-    def app_ver = ''
+    //def app_ver = ''
   }
   stages{
         stage('Pull version'){
@@ -21,7 +21,7 @@ pipeline{
 		
 		version = readFile('final_version').trim()
 		
-		app_ver = readFile('file').trim()		
+		def app_ver = readFile('file').trim()		
 			
                      echo "${version}"
 		   
