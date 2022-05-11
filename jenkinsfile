@@ -6,7 +6,7 @@ pipeline{
     def new_version = ''
     def version = ''
     def applicaton = 'backend'
-    //def app_ver = ''
+    def app_ver = ''
   }
   stages{
         stage('Pull version'){
