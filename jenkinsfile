@@ -12,10 +12,7 @@ pipeline{
         stage('Pull version'){
             steps{
               script{
-	      	
-		echo "$NEXUS_USERNAME"
-		echo "$NEXUS_PASSWORD"
-		sh "curl -X GET -u admin:nexus http://192.168.3.37:8081/repository/my-repo/VERSION -O"
+		sh "curl -X GET -u "$NEXUS_USERNAME":"$NEXUS_PASSWORD" http://192.168.3.37:8081/repository/my-repo/VERSION -O"
 		//sh "rm file && rm final_version"
 		sh "grep '${applicaton}' VERSION >> file && grep -Eo '[0-9]+(.[0-9]+)*' file >> final_version"
 		version = readFile('final_version').trim()	
@@ -86,7 +83,7 @@ pipeline{
             	     script {	
 			def new_app_ver = "${applicaton}"+'='+"${new_version}"
             		sh "sed -i 's/${app_ver}/${new_app_ver}/g' VERSION" 
-    			sh "curl -v -u admin:nexus --upload-file VERSION http://192.168.3.37:8081/repository/my-repo/"
+    			sh "curl -v -u "$NEXUS_USERNAME":"$NEXUS_PASSWORD" --upload-file VERSION http://192.168.3.37:8081/repository/my-repo/"
             			}
             		}
         	}    			
