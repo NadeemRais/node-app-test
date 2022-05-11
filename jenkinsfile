@@ -7,7 +7,7 @@ pipeline{
     def version = ''
     def applicaton = 'backend'
     def app_ver = ''
-    def new_app_ver = "'${applicaton}'+'='+'${new_version}'"
+    def new_app_ver = ''
   }
   stages{
         stage('Pull version'){
@@ -120,7 +120,7 @@ pipeline{
 	   	steps{
             	     script {	
 			
-		
+			new_app_ver = '${applicaton}'+'='+'${new_version}'
             		sh "sed -i 's/${app_ver}/${new_app_ver}/g' VERSION" 
 
     			//sh "curl -v -u admin:nexus --upload-file VERSION http://192.168.3.37:8081/repository/my-repo/"
