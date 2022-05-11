@@ -5,6 +5,7 @@ pipeline{
     DOCKERHUB_CREDENTIALS=credentials('dockerhub')
     def new_version = ''
     def version = ''
+    def applicaton = 'backend'
     def app_ver = ''
     def new_app_ver = ''
   }
@@ -32,10 +33,10 @@ pipeline{
 		      last = last.toInteger() + 1;
 		      new_version = versions[0] + '.' + versions[1]+'.'+"$last"
 		      
-		      def app_vers = app_ver.split('\\.')
-		      def app_last = app_vers[2]
-		      app_last = app_last.toInteger() + 1;
-		      new_app_ver = app_vers[0] + '.' + app_vers[1]+'.'+"$app_last"
+		      //def app_vers = app_ver.split('\\.')
+		      //def app_last = app_vers[2]
+		      //app_last = app_last.toInteger() + 1;
+		      //new_app_ver = app_vers[0] + '.' + app_vers[1]+'.'+"$app_last"
 		      
 		      sh "rm file && rm final_version"
 		      
@@ -51,10 +52,10 @@ pipeline{
 		      echo "$new_version"
 		      
 		      
-		      def app_vers = app_ver.split('\\.')
-		      def app_mid = app_vers[1]
-		      app_mid = app_mid.toInteger() + 1;
-		      new_app_ver = app_vers[0] + '.' + "$app_mid"+'.'+0
+		      //def app_vers = app_ver.split('\\.')
+		      //def app_mid = app_vers[1]
+		      //app_mid = app_mid.toInteger() + 1;
+		      //new_app_ver = app_vers[0] + '.' + "$app_mid"+'.'+0
 		      
 		      sh "rm file && rm final_version"
 		      
@@ -69,13 +70,13 @@ pipeline{
 		      new_version = "$first" + '.' + 0 +'.' + 0
 		      echo "$new_version"
 		      
-		      def app_vers = app_ver.split('\\.')
-		      def temp = app_vers[0]
-		      def temp1 = temp.split('\\=')
-		      def temp2 = temp1[1]
-		      temp2 = temp2.toInteger() + 1;
-		      def temp3 = temp1[0] +'='+ "$temp2"
-		      new_app_ver = "$temp3" + '.' +0+'.'+0
+		      //def app_vers = app_ver.split('\\.')
+		      //def temp = app_vers[0]
+		      //def temp1 = temp.split('\\=')
+		      //def temp2 = temp1[1]
+		      //temp2 = temp2.toInteger() + 1;
+		      //def temp3 = temp1[0] +'='+ "$temp2"
+		      //new_app_ver = "$temp3" + '.' +0+'.'+0
 		      sh "rm file && rm final_version"
 		          
 		      
