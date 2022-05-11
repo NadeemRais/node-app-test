@@ -25,6 +25,7 @@ pipeline{
 		app_ver = readFile('file').trim()		
 			
                      echo "${version}"
+		    echo "${app_ver}" 
 
                      if("${ImageTag}"=="Patch"){
                       echo "This is patch version"
