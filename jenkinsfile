@@ -7,7 +7,7 @@ pipeline{
     def version = ''
     def applicaton = 'backend'
     def app_ver = ''
-    def new_app_ver = ''
+    //def new_app_ver = ''
   }
   stages{
         stage('Pull version'){
@@ -34,51 +34,23 @@ pipeline{
 		      def last = versions[2]
 		      last = last.toInteger() + 1;
 		      new_version = versions[0] + '.' + versions[1]+'.'+"$last"
-		      
-		      //def app_vers = app_ver.split('\\.')
-		      //def app_last = app_vers[2]
-		      //app_last = app_last.toInteger() + 1;
-		      //new_app_ver = app_vers[0] + '.' + app_vers[1]+'.'+"$app_last"
-		      
 		      sh "rm file && rm final_version"
 		      
-	
-
-		     
-		      
-                     }else if("${ImageTag}"=="Minor"){
+		      }else if("${ImageTag}"=="Minor"){
 		      def versions = version.split('\\.')
 		      def mid = versions[1]
 		      mid = mid.toInteger() + 1;
 		      new_version = versions[0] + '.' + "$mid"+'.'+0
 		      echo "$new_version"
-		      
-		      
-		      //def app_vers = app_ver.split('\\.')
-		      //def app_mid = app_vers[1]
-		      //app_mid = app_mid.toInteger() + 1;
-		      //new_app_ver = app_vers[0] + '.' + "$app_mid"+'.'+0
-		      
 		      sh "rm file && rm final_version"
 		      
-		     
-
-                     
-                     }else{
+		      }else{
                       echo "This is major version"
 		      def versions = version.split('\\.')
 		      def first = versions[0]
 		      first = first.toInteger() + 1;
 		      new_version = "$first" + '.' + 0 +'.' + 0
 		      echo "$new_version"
-		      
-		      //def app_vers = app_ver.split('\\.')
-		      //def temp = app_vers[0]
-		      //def temp1 = temp.split('\\=')
-		      //def temp2 = temp1[1]
-		      //temp2 = temp2.toInteger() + 1;
-		      //def temp3 = temp1[0] +'='+ "$temp2"
-		      //new_app_ver = "$temp3" + '.' +0+'.'+0
 		      sh "rm file && rm final_version"
 		          
 		      
@@ -121,7 +93,7 @@ pipeline{
             	     script {	
 			
 			echo "${app_ver}" 
-			new_app_ver = "${applicaton}"+'='+"${new_version}"
+			def new_app_ver = "${applicaton}"+'='+"${new_version}"
 			echo "$new_app_ver"
             		sh "sed -i 's/${app_ver}/${new_app_ver}/g' VERSION" 
 
